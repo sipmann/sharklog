@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Log";
+}
+
+<div class="row">
+    <div class="col">
+        @foreach (var l in Model) {
+        <div class="log">
+            <div class="log-header">
+                <a asp-controller="Log" asp-action="Detail" asp-route-id="@l.Id" class="log-title">
+                    <i class="fas fa-@l.LogType" aria-hidden="true"></i>
+                    @l.Title
+                </a>
+                <span class="log-info " style="float: right">
+                    <span class="log-date">
+                        <i class="fas fa-clock-o"></i> @l.LogDate
+                    </span>
+                </span>
+            </div>
+            <div class="log-body">
+                <pre class="log-code">@l.Body</pre>
+            </div>
+        </div>
+        }
+        
+        @if (Model == null || Model.Count <= 0) {
+        <div class="log">
+            <div>No logs... :)</div>
+        </div>
+        }
+    </div>
+</div>
