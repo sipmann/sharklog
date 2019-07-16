@@ -15,8 +15,7 @@ namespace sharklog.Services
 
         public ApplicationModel GetOrCreateApp(string appname, string token = "")
         {
-            // TODO: Check for token
-            var app = this._context.Applications.Where(a => a.Name == appname).FirstOrDefault();
+            var app = this.Get(appname, token);
 
             if (app == null)
             {
@@ -40,11 +39,11 @@ namespace sharklog.Services
             return app;
         }
 
-        public void UpdateLast(ApplicationModel app)
+
+        public ApplicationModel Get(string appname, string token = "")
         {
-            app.LastUpdate = DateTime.Now;
-            this._context.Update(app);
-            this._context.SaveChanges();
+            // TODO: validate token
+            return this._context.Applications.Where(a => a.Name == appname).FirstOrDefault();
         }
 
     }

@@ -19,13 +19,23 @@ namespace sharklog.Services
 
         public List<LogModel> GetLogs(string appname, String token = "")
         {
-            var app = this._appService.GetOrCreateApp(appname, token);
+            var app = this._appService.Get(appname, token);
+
+            if (app == null)
+            {
+                // TODO: application exception
+                throw new ApplicationException("Application not found");
+            }
+
             return this.GetLogs(app);
         }
 
         public List<LogModel> GetLogs(ApplicationModel app)
         {
-            var logs = this._context.Logs.Where(l => l.Application.Name == app.Name).ToList();
+            var logs = this._context.Logs
+                .Where(l => l.Application.Name == app.Name)
+                .OrderByDescending(l => l.LogDate)
+                .ToList();
             return logs;
         }
 
@@ -47,9 +57,6 @@ namespace sharklog.Services
 
             this._context.Logs.Add(log);
             this._context.SaveChanges();
-
-            this._appService.UpdateLast(app);
-
             logs.Add(log);
 
             return logs;

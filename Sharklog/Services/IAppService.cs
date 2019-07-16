@@ -8,7 +8,6 @@ namespace sharklog.Services
         ApplicationModel GetOrCreateApp(string appname, string token = "");
 
         ApplicationModel AddApp(string appname, string token = "");
-        
-        void UpdateLast(ApplicationModel app);
+        ApplicationModel Get(string appname, string token = "");
     }
 }

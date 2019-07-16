@@ -1,5 +1,5 @@
 /*
-    Learn how to do a better test with qtds
+    Learn how to do a better test with qts
  */
 using Microsoft.EntityFrameworkCore;
 using sharklog.Models;
