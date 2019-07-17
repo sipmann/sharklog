@@ -36,3 +36,11 @@ body {
         display: none;
     }
 }
+
+.navbar-top {
+    background-color: #329CC3;
+}
+
+.navbar-top a {
+    color: #080808;
+}
