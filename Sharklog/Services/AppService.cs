@@ -42,8 +42,14 @@ namespace sharklog.Services
 
         public ApplicationModel Get(string appname, string token = "")
         {
-            // TODO: validate token
-            return this._context.Applications.Where(a => a.Name == appname).FirstOrDefault();
+            var app = this._context.Applications.Where(a => a.Name == appname).FirstOrDefault();
+
+            if (app != null && !String.IsNullOrEmpty(app.Token) && app.Token != token)
+            {
+                throw new ApplicationException("Unauthorized");
+            }
+
+            return app;
         }
 
     }

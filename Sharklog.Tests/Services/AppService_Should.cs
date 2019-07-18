@@ -6,6 +6,7 @@ using sharklog.Models;
 using sharklog.Services;
 using Xunit;
 using System.Threading.Tasks;
+using System;
 
 namespace Tests.Services
 {
@@ -65,5 +66,114 @@ namespace Tests.Services
                 Assert.Equal(qtd, await context.Applications.CountAsync());
             }
         }
+    
+        [Fact]
+        public void GetShouldReturnAppWhenAppExists()
+        {
+            var appName = "SharkLog4";
+            var options = new DbContextOptionsBuilder<SharkContext>()
+                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
+                .Options;
+
+            using (var context = new SharkContext(options))
+            {
+                var service = new AppService(context);
+                
+                // force creation
+                service.GetOrCreateApp(appName);
+                
+                var app = service.Get(appName);
+                Assert.NotEqual(app, null);
+            }
+        }
+
+        [Fact]
+        public void GetShouldReturnNullWhenNotExists()
+        {
+            var appName = "SharkLog5";
+            var options = new DbContextOptionsBuilder<SharkContext>()
+                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
+                .Options;
+
+            using (var context = new SharkContext(options))
+            {
+                var service = new AppService(context);
+                
+                var app = service.Get(appName);
+                Assert.Equal(app, null);
+            }
+        }
+
+        [Fact]
+        public void GetShouldRaiseWhenWrogToken()
+        {
+            var appName = "SharkLog6";
+            var options = new DbContextOptionsBuilder<SharkContext>()
+                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
+                .Options;
+
+            using (var context = new SharkContext(options))
+            {
+                var service = new AppService(context);
+                var app = new ApplicationModel()
+                {
+                    Name = appName,
+                    Token = "abc123"
+                };
+                context.Applications.Add(app);
+                context.SaveChanges();
+                
+                Assert.Throws<ApplicationException>(() => service.Get(app.Name, "123"));
+            }
+        }
+
+        [Fact]
+        public void GetShouldRaiseWhenEmptyTokenButExpectedOne()
+        {
+            var appName = "SharkLog7";
+            var options = new DbContextOptionsBuilder<SharkContext>()
+                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
+                .Options;
+
+            using (var context = new SharkContext(options))
+            {
+                var service = new AppService(context);
+                var app = new ApplicationModel()
+                {
+                    Name = appName,
+                    Token = "abc123"
+                };
+                context.Applications.Add(app);
+                context.SaveChanges();
+                
+                Assert.Throws<ApplicationException>(() => service.Get(app.Name));
+            }
+        }
+
+        [Fact]
+        public void GetShouldReturnAppWhenRightToken()
+        {
+            var appName = "SharkLog8";
+            var options = new DbContextOptionsBuilder<SharkContext>()
+                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
+                .Options;
+
+            using (var context = new SharkContext(options))
+            {
+                var service = new AppService(context);
+                var app = new ApplicationModel()
+                {
+                    Name = appName,
+                    Token = "abc123"
+                };
+                context.Applications.Add(app);
+                context.SaveChanges();
+                
+                var appRet = service.Get(app.Name, app.Token);
+                Assert.NotNull(appRet);
+                Assert.Equal(app, appRet);
+            }
+        }
+
     }
 }
