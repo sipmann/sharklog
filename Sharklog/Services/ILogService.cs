@@ -10,7 +10,7 @@ namespace sharklog.Services
 
         List<LogModel> GetLogs(ApplicationModel app);
 
-        List<LogModel> AddLog(string appname, LogModel log, string token = "");
+        List<LogModel> AddLog(string appname, LogDto log);
 
     }
 }

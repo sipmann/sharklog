@@ -17,14 +17,15 @@ And then, go ahead and look at your `http://localhot:5000` and it's up and runni
 {
     "Title": "Log Title",
     "LogType": "Bug|Info|Cat|Whatever",
-    "Body": "Any string that you want"
+    "Body": "Any string that you want",
+    "Token": "UNINQUE-TOKEN-HERE"
 }
 ```
 
 Sample post 
 
 ```shell
-curl -X POST http://localhost:5000/log/abc -H 'content-type: application/json' -d '{"Title": "Opsy","LogType": "bug","Body": "Exception on file abc.cs on line 17"}'
+curl -X POST http://localhost:5000/log/abc -H 'content-type: application/json' -d '{"Title": "Opsy","LogType": "bug","Body": "Exception on file abc.cs on line 17", "Token": "UNIQUE"}'
 ```
 
 
@@ -37,6 +38,6 @@ curl -X POST http://localhost:5000/log/abc -H 'content-type: application/json' -
 
 ## Todos
 
-[] Custom post processors
-[] Cassandra support
-[] User account to manage applications (if desired)
+- [ ] Custom post processors
+- [ ] Cassandra support
+- [ ] User account to manage applications (if desired)

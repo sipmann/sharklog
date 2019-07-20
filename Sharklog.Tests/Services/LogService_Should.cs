@@ -82,7 +82,7 @@ namespace Tests.Services
             using(var context = new SharkContext(options))
             {
                 var appService = new AppService(context);
-                var log = new LogModel()
+                var log = new LogDto()
                 {
                     Title = "Log Test",
                     LogType = "bug"
@@ -112,7 +112,7 @@ namespace Tests.Services
                 context.Applications.Add(app);
                 context.SaveChanges();
 
-                var log = new LogModel()
+                var log = new LogDto()
                 {
                     Title = "Log Test",
                     LogType = "bug"
@@ -129,13 +129,89 @@ namespace Tests.Services
         [Fact]
         public void AddLogShouldAddWhenAppExistsWithRightToken()
         {
-            
+            var options = new DbContextOptionsBuilder<SharkContext>()
+                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
+                .Options;
+
+            using(var context = new SharkContext(options))
+            {
+                var appService = new AppService(context);
+                var app = new ApplicationModel();
+                app.Name = "abc-unique-with-token";
+                app.Token = "abc123";
+
+                context.Applications.Add(app);
+                context.SaveChanges();
+
+                var log = new LogDto()
+                {
+                    Title = "Log Test",
+                    LogType = "bug",
+                    Token = app.Token
+                };
+
+                var service = new LogService(context, appService);
+                var logs = service.AddLog(app.Name, log);
+
+                Assert.NotNull(logs);
+                Assert.NotEmpty(logs);
+            }
         }
 
         [Fact]
         public void AddLogShouldAddWhenAppExistsWithWrongToken()
         {
+            var options = new DbContextOptionsBuilder<SharkContext>()
+                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
+                .Options;
 
+            using(var context = new SharkContext(options))
+            {
+                var appService = new AppService(context);
+                var app = new ApplicationModel();
+                app.Name = "abc-unique-with-token";
+                app.Token = "abc123";
+
+                context.Applications.Add(app);
+                context.SaveChanges();
+
+                var log = new LogDto()
+                {
+                    Title = "Log Test",
+                    LogType = "bug",
+                    Token = "abc"
+                };
+
+                var service = new LogService(context, appService);
+                Assert.Throws<ApplicationException>(() => service.AddLog(app.Name, log));
+            }
+        }
+
+        public void AddLogShouldAddWhenAppExistsWithEmptyTokenButExpected()
+        {
+            var options = new DbContextOptionsBuilder<SharkContext>()
+                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
+                .Options;
+
+            using(var context = new SharkContext(options))
+            {
+                var appService = new AppService(context);
+                var app = new ApplicationModel();
+                app.Name = "abc-unique-with-token";
+                app.Token = "abc123";
+
+                context.Applications.Add(app);
+                context.SaveChanges();
+
+                var log = new LogDto()
+                {
+                    Title = "Log Test",
+                    LogType = "bug"
+                };
+
+                var service = new LogService(context, appService);
+                Assert.Throws<ApplicationException>(() => service.AddLog(app.Name, log));
+            }
         }
     }
 }

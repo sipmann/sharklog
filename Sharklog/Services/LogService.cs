@@ -39,12 +39,18 @@ namespace sharklog.Services
             return logs;
         }
 
-        public List<LogModel> AddLog(string appname, LogModel log, String token = "")
+        public List<LogModel> AddLog(string appname, LogDto logDto)
         {
             var uuid = Guid.NewGuid().ToString();
             
-            var app = this._appService.GetOrCreateApp(appname, token);
+            var app = this._appService.GetOrCreateApp(appname, logDto.Token);
             var logs = this.GetLogs(app);
+            var log = new LogModel()
+            {
+                Title = logDto.Title,
+                Body = logDto.Body,
+                LogType = logDto.LogType
+            };
             
             if (string.IsNullOrEmpty(log.LogType))
             {

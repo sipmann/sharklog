@@ -15,9 +15,9 @@ namespace sharklog.Controllers
         }
 
         [HttpGet("/log/{appname}")]
-        public IActionResult Index(string appname)
+        public IActionResult Index(string appname, [FromQueryAttribute] string token = "")
         {
-            var logs = this.service.GetLogs(appname, "");
+            var logs = this.service.GetLogs(appname, token);
 
             if (HttpContext.Request.IsAjaxRequest()) 
             {
@@ -34,9 +34,9 @@ namespace sharklog.Controllers
         }
 
         [HttpPost("/log/{appname}")]
-        public IActionResult Post(string appname, [FromBody] LogModel log)
+        public IActionResult Post(string appname, [FromBody] LogDto log)
         {
-            this.service.AddLog(appname, log, "");
+            this.service.AddLog(appname, log);
             return Ok();
         }
     }
