@@ -12,13 +12,18 @@ namespace Tests.Services
 {
     public class AppService_Should
     {
+        private DbContextOptions<SharkContext> options;
+
+        public AppService_Should()
+        {
+            this.options = new DbContextOptionsBuilder<SharkContext>()
+                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
+                .Options;
+        }
+
         [Fact]
         public async Task AddAppShouldCreatApp()
         {
-            var options = new DbContextOptionsBuilder<SharkContext>()
-                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
-                .Options;
-
             using (var context = new SharkContext(options))
             {
                 var qtd = await context.Applications.CountAsync();
@@ -32,9 +37,6 @@ namespace Tests.Services
         public async Task GetOrCreateShouldCreatAppWhenDoesntExists()
         {
             var appName = "SharkLog2";
-            var options = new DbContextOptionsBuilder<SharkContext>()
-                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
-                .Options;
 
             using (var context = new SharkContext(options))
             {
@@ -50,9 +52,6 @@ namespace Tests.Services
         public async Task GetOrCreateShouldNotCreatAppWhenAppExists()
         {
             var appName = "SharkLog3";
-            var options = new DbContextOptionsBuilder<SharkContext>()
-                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
-                .Options;
 
             using (var context = new SharkContext(options))
             {
@@ -71,9 +70,6 @@ namespace Tests.Services
         public void GetShouldReturnAppWhenAppExists()
         {
             var appName = "SharkLog4";
-            var options = new DbContextOptionsBuilder<SharkContext>()
-                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
-                .Options;
 
             using (var context = new SharkContext(options))
             {
@@ -91,10 +87,7 @@ namespace Tests.Services
         public void GetShouldReturnNullWhenNotExists()
         {
             var appName = "SharkLog5";
-            var options = new DbContextOptionsBuilder<SharkContext>()
-                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
-                .Options;
-
+            
             using (var context = new SharkContext(options))
             {
                 var service = new AppService(context);
@@ -108,10 +101,7 @@ namespace Tests.Services
         public void GetShouldRaiseWhenWrogToken()
         {
             var appName = "SharkLog6";
-            var options = new DbContextOptionsBuilder<SharkContext>()
-                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
-                .Options;
-
+            
             using (var context = new SharkContext(options))
             {
                 var service = new AppService(context);
@@ -131,10 +121,7 @@ namespace Tests.Services
         public void GetShouldRaiseWhenEmptyTokenButExpectedOne()
         {
             var appName = "SharkLog7";
-            var options = new DbContextOptionsBuilder<SharkContext>()
-                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
-                .Options;
-
+            
             using (var context = new SharkContext(options))
             {
                 var service = new AppService(context);
@@ -154,10 +141,7 @@ namespace Tests.Services
         public void GetShouldReturnAppWhenRightToken()
         {
             var appName = "SharkLog8";
-            var options = new DbContextOptionsBuilder<SharkContext>()
-                .UseInMemoryDatabase(databaseName: "Add_writes_to_database")
-                .Options;
-
+            
             using (var context = new SharkContext(options))
             {
                 var service = new AppService(context);
