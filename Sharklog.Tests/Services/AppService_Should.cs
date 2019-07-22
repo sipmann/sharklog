@@ -79,7 +79,7 @@ namespace Tests.Services
                 service.GetOrCreateApp(appName);
                 
                 var app = service.Get(appName);
-                Assert.NotEqual(app, null);
+                Assert.NotNull(app);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Tests.Services
                 var service = new AppService(context);
                 
                 var app = service.Get(appName);
-                Assert.Equal(app, null);
+                Assert.Null(app);
             }
         }
 

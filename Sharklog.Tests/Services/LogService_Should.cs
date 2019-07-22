@@ -33,7 +33,7 @@ namespace Tests.Services
                 var service = new LogService(context, appService);
                 var logs = service.GetLogs(app.Name);
 
-                Assert.NotEqual(logs, null);
+                Assert.NotNull(logs);
             }
         }
 
@@ -63,7 +63,7 @@ namespace Tests.Services
                 var service = new LogService(context, appService);
                 var logs = service.GetLogs(app);
 
-                Assert.NotEqual(logs, null);
+                Assert.NotNull(logs);
                 Assert.Empty(logs);
             }
         }
@@ -83,7 +83,7 @@ namespace Tests.Services
                 var service = new LogService(context, appService);
                 var logs = service.AddLog("AbcUnique", log);
 
-                Assert.NotEqual(logs, null);
+                Assert.NotNull(logs);
                 Assert.NotEmpty(logs);
             }
         }
@@ -109,7 +109,7 @@ namespace Tests.Services
                 var service = new LogService(context, appService);
                 var logs = service.AddLog(app.Name, log);
 
-                Assert.NotEqual(logs, null);
+                Assert.NotNull(logs);
                 Assert.NotEmpty(logs);
             }
         }
@@ -167,6 +167,7 @@ namespace Tests.Services
             }
         }
 
+        [Fact]
         public void AddLogShouldAddWhenAppExistsWithEmptyTokenButExpected()
         {
             using(var context = new SharkContext(options))
