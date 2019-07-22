@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Log";
+}
+
+<div class="row">
+    <div class="col">
+        <div class="log">
+            <div class="log-header">
+                <a asp-controller="Log" asp-action="Detail" asp-route-id="@Model.Id" class="log-title">
+                    <i class="fas fa-@Model.LogType" aria-hidden="true"></i>
+                    @Model.Title
+                </a>
+                <span class="log-info" style="float: right">
+                    <span class="log-date">
+                        <i class="fas fa-clock-o"></i> @Model.LogDate
+                    </span>
+                </span>
+            </div>
+            <div class="log-body">
+                <pre class="log-code">@Model.Body</pre>
+            </div>
+        </div>
+    </div>
+</div>

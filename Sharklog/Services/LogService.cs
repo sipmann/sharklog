@@ -68,5 +68,33 @@ namespace sharklog.Services
             return logs;
         }
 
+        public LogModel Get(string logid, string token = "")
+        {
+            /*var log = _context.Logs
+                    .Join(_context.Applications,
+                        logs => logs.Id,
+                        app => app.Id,
+                        (logs,app) => new { Log = logs, App = app },)
+                    .Where(l => l.Id == logid)
+                    .FirstOrDefault();*/
+
+            var log = (from logs in _context.Logs
+                    join apps in _context.Applications on logs.Application.Id equals apps.Id
+                    where logs.Id == logid
+                    select new {Log = logs, App = apps}).SingleOrDefault();
+
+            if (log == null)
+            {
+                throw new ApplicationException("Not Found");
+            }
+
+            if (!String.IsNullOrEmpty(log.App.Token) && log.App.Token != token)
+            {
+                throw new ApplicationException("Unauthorized");
+            }
+
+            return log.Log;
+        }
+
     }
 }

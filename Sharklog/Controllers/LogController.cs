@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using sharklog.Models;
 using sharklog.Services;
 
@@ -27,17 +26,18 @@ namespace sharklog.Controllers
             return View(logs);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
         [HttpPost("/log/{appname}")]
         public IActionResult Post(string appname, [FromBody] LogDto log)
         {
             this.service.AddLog(appname, log);
             return Ok();
+        }
+
+        [HttpGet("/log/detail/{logid}")]
+        public IActionResult Detail(string logid, [FromQueryAttribute] string token = "")
+        {
+            var log = this.service.Get(logid, token);
+            return View(log);
         }
     }
 }

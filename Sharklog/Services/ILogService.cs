@@ -11,6 +11,7 @@ namespace sharklog.Services
         List<LogModel> GetLogs(ApplicationModel app);
 
         List<LogModel> AddLog(string appname, LogDto log);
-
+        
+        LogModel Get(string logid, string token = "");
     }
 }

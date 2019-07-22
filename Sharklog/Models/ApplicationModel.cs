@@ -1,5 +1,3 @@
-using System;
-
 namespace sharklog.Models
 {
     public class ApplicationModel
