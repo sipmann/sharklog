@@ -39,7 +39,6 @@ namespace sharklog.Services
             return app;
         }
 
-
         public ApplicationModel Get(string appname, string token = "")
         {
             var app = this._context.Applications.Where(a => a.Name == appname).FirstOrDefault();
