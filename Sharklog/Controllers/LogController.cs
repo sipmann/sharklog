@@ -23,6 +23,7 @@ namespace sharklog.Controllers
                 return Json(logs);
             }
 
+            ViewData["AppName"] = appname;
             return View(logs);
         }
 
