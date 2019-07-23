@@ -41,7 +41,7 @@ namespace sharklog
             services.AddMemoryCache();
             services.AddScoped<IAppService, AppService>();
             services.AddScoped<ILogService, LogService>();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             var connection = Configuration.GetConnectionString("SharkDatabase");
             services.AddDbContext<SharkContext> (options => options.UseMySql(connection));

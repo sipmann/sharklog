@@ -70,14 +70,6 @@ namespace sharklog.Services
 
         public LogModel Get(string logid, string token = "")
         {
-            /*var log = _context.Logs
-                    .Join(_context.Applications,
-                        logs => logs.Id,
-                        app => app.Id,
-                        (logs,app) => new { Log = logs, App = app },)
-                    .Where(l => l.Id == logid)
-                    .FirstOrDefault();*/
-
             var log = (from logs in _context.Logs
                     join apps in _context.Applications on logs.Application.Id equals apps.Id
                     where logs.Id == logid
