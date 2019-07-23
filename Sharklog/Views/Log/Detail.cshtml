@@ -1,15 +1,20 @@
 ﻿@{
     ViewData["Title"] = "Log";
 }
-
+<h2>
+    <a asp-controller="Log" asp-action="Index" asp-route-appname="@Model.Application.Name" class="log-title">
+        @Model.Application.Name
+    </a>
+</h2>
 <div class="row">
     <div class="col">
         <div class="log">
             <div class="log-header">
-                <a asp-controller="Log" asp-action="Detail" asp-route-id="@Model.Id" class="log-title">
-                    <i class="fas fa-@Model.LogType" aria-hidden="true"></i>
-                    @Model.Title
-                </a>
+                <div>
+                    UUID: @Model.Id
+                </div>
+                <i class="fas fa-@Model.LogType" aria-hidden="true"></i>
+                @Model.Title
                 <span class="log-info" style="float: right">
                     <span class="log-date">
                         <i class="fas fa-clock-o"></i> @Model.LogDate

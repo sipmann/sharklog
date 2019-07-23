@@ -1,6 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Log";
 }
+<h2>
+    <a asp-controller="Log" asp-action="Index" asp-route-appname="@ViewData["AppName"]" class="log-title"></a>
+        @ViewData["AppName"]
+    </a>
+</h2>
 
 <div class="row">
     <div class="col">

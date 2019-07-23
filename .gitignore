@@ -39,3 +39,4 @@ msbuild.wrn
 coverage.json
 
 appsettings.json
+appsettings.Development.json
