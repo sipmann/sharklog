@@ -2,7 +2,8 @@
     ViewData["Title"] = "Log";
 }
 <h2>
-    <a asp-controller="Log" asp-action="Index" asp-route-appname="@Model.Application.Name" class="log-title">
+    <a asp-controller="Log" asp-action="Index" asp-route-appname="@Model.Application.Name" 
+        asp-route-token="@ViewData["AppToken"]" class="log-title">
         @Model.Application.Name
     </a>
 </h2>

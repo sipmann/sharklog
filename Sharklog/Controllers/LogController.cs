@@ -24,6 +24,7 @@ namespace sharklog.Controllers
             }
 
             ViewData["AppName"] = appname;
+            ViewData["AppToken"] = token;
             return View(logs);
         }
 
@@ -38,6 +39,7 @@ namespace sharklog.Controllers
         public IActionResult Detail(string logid, [FromQueryAttribute] string token = "")
         {
             var log = this.service.Get(logid, token);
+            ViewData["AppToken"] = token;
             return View(log);
         }
     }

@@ -12,7 +12,8 @@
         @foreach (var l in Model) {
         <div class="log">
             <div class="log-header">
-                <a asp-controller="log" asp-action="detail" asp-route-logid="@l.Id" class="log-title">
+                <a asp-controller="log" asp-action="detail" asp-route-logid="@l.Id" 
+                    asp-route-token="@ViewData["AppToken"]" class="log-title">
                     <i class="fas fa-@l.LogType" aria-hidden="true"></i>
                     @l.Title
                 </a>
