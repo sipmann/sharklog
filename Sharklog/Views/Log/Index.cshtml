@@ -2,7 +2,7 @@
     ViewData["Title"] = "Log";
 }
 <h2>
-    <a asp-controller="Log" asp-action="Index" asp-route-appname="@ViewData["AppName"]" class="log-title"></a>
+    <a asp-controller="Log" asp-action="Index" asp-route-appname="@ViewData["AppName"]" class="log-title">
         @ViewData["AppName"]
     </a>
 </h2>
@@ -12,7 +12,7 @@
         @foreach (var l in Model) {
         <div class="log">
             <div class="log-header">
-                <a asp-controller="Log" asp-action="Detail" asp-route-id="@l.Id" class="log-title">
+                <a asp-controller="log" asp-action="detail" asp-route-logid="@l.Id" class="log-title">
                     <i class="fas fa-@l.LogType" aria-hidden="true"></i>
                     @l.Title
                 </a>

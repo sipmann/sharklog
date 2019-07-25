@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using sharklog.Services;
 using sharklog.Models;
+using sharklog.Middleware;
 
 namespace sharklog
 {
@@ -54,6 +55,7 @@ namespace sharklog
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseMiniProfiler();
             }
             else
             {
@@ -65,7 +67,7 @@ namespace sharklog
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseMiniProfiler();
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseMvc(routes =>
             {
