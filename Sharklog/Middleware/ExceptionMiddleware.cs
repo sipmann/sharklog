@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -31,8 +29,15 @@ namespace sharklog.Middleware
             }
             catch (Exception ex)
             {
-                await HandleExceptionAsync(httpContext, ex);
                 SendLog(ex);
+
+                if (httpContext.Request.IsAjaxRequest()) 
+                {
+                    await HandleExceptionAsync(httpContext, ex);
+                } else
+                {
+                    httpContext.Response.Redirect("/Home/Error");
+                }
             }
         }
     
