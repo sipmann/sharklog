@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using sharklog.Models;
 
 namespace sharklog.Services
@@ -13,19 +14,19 @@ namespace sharklog.Services
             this._context = context;
         }
 
-        public ApplicationModel GetOrCreateApp(string appname, string token = "")
+        public async Task<ApplicationModel> GetOrCreateApp(string appname, string token = "")
         {
             var app = this.Get(appname, token);
 
             if (app == null)
             {
-                app = this.AddApp(appname, token);
+                app = await this.AddApp(appname, token);
             }
 
             return app;
         }
 
-        public ApplicationModel AddApp(string appname, string token = "")
+        public async Task<ApplicationModel> AddApp(string appname, string token = "")
         {
             var app = new ApplicationModel()
             {
@@ -33,8 +34,8 @@ namespace sharklog.Services
                 Token = token
             };
 
-            this._context.Applications.Add(app);
-            this._context.SaveChanges();
+            await this._context.Applications.AddAsync(app);
+            await this._context.SaveChangesAsync();
 
             return app;
         }

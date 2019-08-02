@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using sharklog.Models;
 
 namespace sharklog.Services
@@ -10,7 +11,7 @@ namespace sharklog.Services
 
         List<LogModel> GetLogs(ApplicationModel app);
 
-        List<LogModel> AddLog(string appname, LogDto log);
+        Task<List<LogModel>> AddLog(string appname, LogDto log);
         
         LogModel Get(string logid, string token = "");
     }

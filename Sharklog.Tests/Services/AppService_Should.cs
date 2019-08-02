@@ -7,6 +7,7 @@ using sharklog.Services;
 using Xunit;
 using System.Threading.Tasks;
 using System;
+using System.Linq;
 
 namespace Tests.Services
 {
@@ -28,7 +29,7 @@ namespace Tests.Services
             {
                 var qtd = await context.Applications.CountAsync();
                 var service = new AppService(context);
-                service.AddApp("SharkLog");
+                await service.AddApp("SharkLog");
                 Assert.Equal(qtd + 1, await context.Applications.CountAsync());
             }
         }
@@ -41,10 +42,11 @@ namespace Tests.Services
             using (var context = new SharkContext(options))
             {
                 var service = new AppService(context);
-                var qtd = await context.Applications.CountAsync();
+                var qtd = await context.Applications.Where(a => a.Name == appName).CountAsync();
                 
-                service.GetOrCreateApp(appName);
-                Assert.Equal(qtd + 1, await context.Applications.CountAsync());
+                await service.GetOrCreateApp(appName);
+                Console.WriteLine(qtd);
+                Assert.Equal(qtd + 1, await context.Applications.Where(a => a.Name == appName).CountAsync());
             }
         }
 
@@ -58,16 +60,16 @@ namespace Tests.Services
                 var service = new AppService(context);
                 
                 // force creation
-                service.GetOrCreateApp(appName);
-                var qtd = await context.Applications.CountAsync();
+                await service.GetOrCreateApp(appName);
+                var qtd = await context.Applications.Where(a => a.Name == appName).CountAsync();
                 
-                service.GetOrCreateApp(appName);
-                Assert.Equal(qtd, await context.Applications.CountAsync());
+                await service.GetOrCreateApp(appName);
+                Assert.Equal(qtd, await context.Applications.Where(a => a.Name == appName).CountAsync());
             }
         }
     
         [Fact]
-        public void GetShouldReturnAppWhenAppExists()
+        public async void GetShouldReturnAppWhenAppExists()
         {
             var appName = "SharkLog4";
 
@@ -76,7 +78,7 @@ namespace Tests.Services
                 var service = new AppService(context);
                 
                 // force creation
-                service.GetOrCreateApp(appName);
+                await service.GetOrCreateApp(appName);
                 
                 var app = service.Get(appName);
                 Assert.NotNull(app);

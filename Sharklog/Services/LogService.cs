@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using sharklog.Models;
 
 namespace sharklog.Services
 {
     public class LogService : ILogService
     {
-
-        private SharkContext _context;
+private SharkContext _context;
         private IAppService _appService;
 
         public LogService(SharkContext context, IAppService appService)
@@ -32,18 +32,17 @@ namespace sharklog.Services
 
         public List<LogModel> GetLogs(ApplicationModel app)
         {
-            var logs = this._context.Logs
+            return this._context.Logs
                 .Where(l => l.Application.Name == app.Name)
                 .OrderByDescending(l => l.LogDate)
                 .ToList();
-            return logs;
         }
 
-        public List<LogModel> AddLog(string appname, LogDto logDto)
+        public async Task<List<LogModel>> AddLog(string appname, LogDto logDto)
         {
             var uuid = Guid.NewGuid().ToString();
             
-            var app = this._appService.GetOrCreateApp(appname, logDto.Token);
+            var app = await this._appService.GetOrCreateApp(appname, logDto.Token);
             var logs = this.GetLogs(app);
             var log = new LogModel()
             {
@@ -61,8 +60,8 @@ namespace sharklog.Services
             log.LogDate = DateTime.Now;
             log.Application = app;
 
-            this._context.Logs.Add(log);
-            this._context.SaveChanges();
+            await this._context.Logs.AddAsync(log);
+            await this._context.SaveChangesAsync();
             logs.Add(log);
 
             return logs;

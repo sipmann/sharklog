@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using sharklog.Models;
 using sharklog.Services;
 
@@ -29,9 +30,9 @@ namespace sharklog.Controllers
         }
 
         [HttpPost("/log/{appname}")]
-        public IActionResult Post(string appname, [FromBody] LogDto log)
+        public async Task<IActionResult> Post(string appname, [FromBody] LogDto log)
         {
-            this.service.AddLog(appname, log);
+            await this.service.AddLog(appname, log);
             return Ok();
         }
 

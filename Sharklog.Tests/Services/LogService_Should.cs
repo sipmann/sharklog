@@ -69,7 +69,7 @@ namespace Tests.Services
         }
 
         [Fact]
-        public void AddLogShouldAddWhenAppNotExists()
+        public async void AddLogShouldAddWhenAppNotExists()
         {
             using(var context = new SharkContext(options))
             {
@@ -81,7 +81,7 @@ namespace Tests.Services
                 };
 
                 var service = new LogService(context, appService);
-                var logs = service.AddLog("AbcUnique", log);
+                var logs = await service.AddLog("AbcUnique", log);
 
                 Assert.NotNull(logs);
                 Assert.NotEmpty(logs);
@@ -89,7 +89,7 @@ namespace Tests.Services
         }
         
         [Fact]
-        public void AddLogShouldAddWhenAppExists()
+        public async void AddLogShouldAddWhenAppExists()
         {
             using(var context = new SharkContext(options))
             {
@@ -107,7 +107,7 @@ namespace Tests.Services
                 };
 
                 var service = new LogService(context, appService);
-                var logs = service.AddLog(app.Name, log);
+                var logs = await service.AddLog(app.Name, log);
 
                 Assert.NotNull(logs);
                 Assert.NotEmpty(logs);
@@ -115,7 +115,7 @@ namespace Tests.Services
         }
 
         [Fact]
-        public void AddLogShouldAddWhenAppExistsWithRightToken()
+        public async void AddLogShouldAddWhenAppExistsWithRightToken()
         {
             using(var context = new SharkContext(options))
             {
@@ -135,7 +135,7 @@ namespace Tests.Services
                 };
 
                 var service = new LogService(context, appService);
-                var logs = service.AddLog(app.Name, log);
+                var logs = await service.AddLog(app.Name, log);
 
                 Assert.NotNull(logs);
                 Assert.NotEmpty(logs);
@@ -163,7 +163,7 @@ namespace Tests.Services
                 };
 
                 var service = new LogService(context, appService);
-                Assert.Throws<ApplicationException>(() => service.AddLog(app.Name, log));
+                Assert.ThrowsAsync<ApplicationException>(() => service.AddLog(app.Name, log));
             }
         }
 
@@ -187,7 +187,7 @@ namespace Tests.Services
                 };
 
                 var service = new LogService(context, appService);
-                Assert.Throws<ApplicationException>(() => service.AddLog(app.Name, log));
+                Assert.ThrowsAsync<ApplicationException>(() => service.AddLog(app.Name, log));
             }
         }
     }
