@@ -81,10 +81,10 @@ namespace Tests.Services
                 };
 
                 var service = new LogService(context, appService);
-                var logs = await service.AddLog("AbcUnique", log);
+                var logRet = await service.AddLog("AbcUnique", log);
 
-                Assert.NotNull(logs);
-                Assert.NotEmpty(logs);
+                Assert.NotNull(logRet);
+                Assert.NotNull(logRet.Id);
             }
         }
         
@@ -107,10 +107,10 @@ namespace Tests.Services
                 };
 
                 var service = new LogService(context, appService);
-                var logs = await service.AddLog(app.Name, log);
+                var logRet = await service.AddLog(app.Name, log);
 
-                Assert.NotNull(logs);
-                Assert.NotEmpty(logs);
+                Assert.NotNull(logRet);
+                Assert.NotNull(logRet.Id);
             }
         }
 
@@ -135,10 +135,10 @@ namespace Tests.Services
                 };
 
                 var service = new LogService(context, appService);
-                var logs = await service.AddLog(app.Name, log);
+                var logRet = await service.AddLog(app.Name, log);
 
-                Assert.NotNull(logs);
-                Assert.NotEmpty(logs);
+                Assert.NotNull(logRet);
+                Assert.NotNull(logRet.Id);
             }
         }
 

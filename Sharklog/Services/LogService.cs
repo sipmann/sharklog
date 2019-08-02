@@ -38,12 +38,11 @@ private SharkContext _context;
                 .ToList();
         }
 
-        public async Task<List<LogModel>> AddLog(string appname, LogDto logDto)
+        public async Task<LogModel> AddLog(string appname, LogDto logDto)
         {
             var uuid = Guid.NewGuid().ToString();
             
             var app = await this._appService.GetOrCreateApp(appname, logDto.Token);
-            var logs = this.GetLogs(app);
             var log = new LogModel()
             {
                 Title = logDto.Title,
@@ -62,9 +61,7 @@ private SharkContext _context;
 
             await this._context.Logs.AddAsync(log);
             await this._context.SaveChangesAsync();
-            logs.Add(log);
-
-            return logs;
+            return log;
         }
 
         public LogModel Get(string logid, string token = "")

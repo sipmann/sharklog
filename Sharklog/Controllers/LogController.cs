@@ -30,10 +30,9 @@ namespace sharklog.Controllers
         }
 
         [HttpPost("/log/{appname}")]
-        public async Task<IActionResult> Post(string appname, [FromBody] LogDto log)
+        public async Task<LogModel> Post(string appname, [FromBody] LogDto log)
         {
-            await this.service.AddLog(appname, log);
-            return Ok();
+            return await this.service.AddLog(appname, log);
         }
 
         [HttpGet("/log/detail/{logid}")]
