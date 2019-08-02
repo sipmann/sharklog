@@ -2,9 +2,11 @@
 
 [![Build Status](https://sipmann.visualstudio.com/github%20OSS/_apis/build/status/sipmann.sharklog?branchName=master)](https://sipmann.visualstudio.com/github%20OSS/_build/latest?definitionId=2&branchName=master)
 
-This is suposed to be a simple Real Time Log based on [Sand Castle Logger](https://github.com/benhurott/sand-castle-logger). With a few changes on how it works. 
+This is supposed to be a simple Real Time Log based on [Sand Castle Logger](https://github.com/benhurott/sand-castle-logger). With a few changes on how it works. You can use it right now at [https://sharklog.sipmann.com](https://sharklog.sipmann.com), it's free BUT we'll clear the logs every now and then.
 
 ## Running
+
+Create the database and the tables from `create.sql` and configure the connection at the `appsettings.json` or `appsettings.Development.json`.
 
 ```shell
 dotnet restore
@@ -33,7 +35,7 @@ curl -X POST http://localhost:5000/log/abc -H 'content-type: application/json' -
 ## Requirements
 
 * DotNet Core 2.2
-* MySQL > 5.7
+* MySQL >= 5.7
 
 
 ## Todos

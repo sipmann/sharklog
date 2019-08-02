@@ -8,7 +8,7 @@ namespace sharklog.Services
 {
     public class LogService : ILogService
     {
-private SharkContext _context;
+        private SharkContext _context;
         private IAppService _appService;
 
         public LogService(SharkContext context, IAppService appService)
