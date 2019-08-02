@@ -12,13 +12,16 @@
     <div class="col">
         <h2>Why another log tool?</h2>
         <p>
-            I was in need of a simple and easy to use Log storage tool that I could customize the processing unit of the log. It's based on the nodejs Log tool <a href="https://github.com/benhurott/sand-castle-logger">Sand Castle Logger</a>.
+            I was in need of a simple and easy to use Log storage tool that I could customize the processing unit of the log. It's based on the nodejs Log tool <a href="https://github.com/benhurott/sand-castle-logger">Sand Castle Logger</a>. You can use it right now at <a href="https://sharklog.sipmann.com">https://sharklog.sipmann.com</a>, it's free BUT we'll clear the logs every now and then.
         </p>
     </div>
 </div>
 
 <div class="row">
     <h2>Running</h2>
+    <p>
+        Create the database and the tables from `create.sql` and configure the connection at the `appsettings.json` or `appsettings.Development.json`.
+    </p>
     <div class="highlight highlight-source-shell">
         <pre>dotnet restore
 dotnet run</pre>
