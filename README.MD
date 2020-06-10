@@ -10,6 +10,7 @@ Create the database and the tables from `create.sql` and configure the connectio
 
 ```shell
 dotnet restore
+dotnet ef database update
 dotnet run
 ```
 
