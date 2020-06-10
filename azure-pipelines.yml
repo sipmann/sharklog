@@ -16,7 +16,7 @@ variables:
 steps:
 - task: DotNetCoreInstaller@0
   inputs:
-    version: '3.1.x' # replace this value with the version that you need for your project
+    version: '3.0.x' # replace this value with the version that you need for your project
 
 - task: DotNetCoreCLI@2
   inputs:
@@ -33,7 +33,7 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: Tests
   inputs:
-    command: test
+    command: test 
     projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
